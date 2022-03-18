@@ -14,11 +14,6 @@ bot = Bot(token='5068063653:AAEby3FBqFSZkvUysXrRi8f7w4RyNRXfiS0')
 dp = Dispatcher(bot)
 
 
-from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-
-
-bot = Bot(token='5068063653:AAGNUJg75XuCcQwMm7Tl-7LFBCEOa2WOw58')
-dp = Dispatcher(bot)
 
 #Главное меню
 firstMenuKeyboard=InlineKeyboardMarkup(row_width=1)
@@ -36,8 +31,6 @@ loginAccountPartnersKeyboard= InlineKeyboardMarkup (row_width=1)
 frequentProblemButton= InlineKeyboardButton(text='Частые проблемы', callback_data='frequentProblem')
 accountPartnersButton= InlineKeyboardButton(text='Кабинет партнера', callback_data='accountPartners')
 loginAccountPartnersKeyboard.add(frequentProblemButton, accountPartnersButton)
-
-
 
 
 accountProblemKeyboard = InlineKeyboardMarkup(row_width=1)
@@ -134,12 +127,10 @@ officialRepresentativesKeyboard=InlineKeyboardMarkup(row_width=1).add(toolsAndPr
 
 
 
-
 @dp.message_handler(commands='start')
 async def firstButton(message: types.Message):
     await message.answer('Какие у вас вопросы? \n'
                          'Выберите интересующий раздел нажав на кнопку, или выберите “Помощь человека” для связи с сотрудником реферальной программы.', reply_markup=firstMenuKeyboard)
-
 
 #Блок проблем кабинета партнера--
 
@@ -151,12 +142,6 @@ async def callAccountProblemKeyboard(callAcc: types.CallbackQuery):
 @dp.callback_query_handler(text='frequentProblem')
 async def frequentProblem(callfP: types.CallbackQuery):
     await callfP.message.answer(text='Список частых проблем со входом в кабинет партнёра и как их решить.',reply_markup = accountProblemKeyboard)
-
-@dp.callback_query_handler(text='accountProblemButton')
-async def callAccountProblemKeyboard(callAcc: types.CallbackQuery):
-    await callAcc.message.answer('Зайдите на сайт kontur.ru в раздел Реферальная программа - https://kontur.ru/partnership/online и нажмите «Войти в кабинет партнера».\n'
-                              'Заходить в кабинет партнера необходимо по электронной почте, указанной при регистрации в реферальной программе.')
-    await callAcc.message.answer(text='Список частых проблем со входом в кабинет партнёра и как их решить.',reply_markup = accountProblemKeyboard)
 
 
 @dp.callback_query_handler(text='otherData')
