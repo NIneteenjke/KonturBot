@@ -26,7 +26,7 @@ firstMenuKeyboard.add(accountProblemButton, rewardButton, submitApplication, rec
 #Кнопки: "Вход в кабинет партнера"
 loginAccountPartnersKeyboard= InlineKeyboardMarkup (row_width=1)
 frequentProblemButton= InlineKeyboardButton(text='Частые проблемы', callback_data='frequentProblem')
-accountPartnersButton= InlineKeyboardButton(text='Кабинет пратнера', callback_data='accountPartners')
+accountPartnersButton= InlineKeyboardButton(text='Кабинет партнера', callback_data='accountPartners')
 loginAccountPartnersKeyboard.add(frequentProblemButton, accountPartnersButton)
 
 
@@ -86,6 +86,42 @@ chooseProductButton=InlineKeyboardButton(text='Выберите продукт',
 chooseAudienceButton=InlineKeyboardButton(text='Выберите аудиторию', url='https://support.kontur.ru/pages/viewpage.action?pageId=83870810', parse_mode='Markdown', disable_web_page_preview=True)
 recommendationsKeyboard.add(chooseProductButton, chooseAudienceButton)
 
+#Кнопки: "Еще"
+moreKeyboard=InlineKeyboardMarkup(row_width=1)
+officialRepresentativesButton=InlineKeyboardButton(text='Официальным представителям', callback_data='officialRepresentatives')
+termsRefPathershipsButton=InlineKeyboardButton(text='Условия реферального партнерства', callback_data='termsRefPatherships')
+toolsAndPromotionButton=InlineKeyboardButton(text='Инструменты и продвижения', callback_data='toolsAndPromotion')
+moreKeyboard.add(officialRepresentativesButton, notTakeApplicatonButton, accountPartnersButton, termsRefPathershipsButton, toolsAndPromotionButton )
+
+termsRefPathershipsKeyboard=InlineKeyboardMarkup(row_width=1)
+whoCanParticipateButton=InlineKeyboardButton(text='Кто может учавствовать', callback_data='whoCanParticipate')
+formsOfParthershipButton=InlineKeyboardButton(text='Формы партнерства', callback_data='formsOfParthership')
+howMuchCanEarnButton=InlineKeyboardButton(text='Сколько можно заработать', callback_data='howMuchCanEarn')
+termsRefPathershipsKeyboard.add(whoCanParticipateButton, formsOfParthershipButton, howMuchCanEarnButton)
+
+howMuchCanEarnKeyboard=InlineKeyboardMarkup(row_width=1)
+additionalRemunerationButton=InlineKeyboardButton(text='Дополнительное вознаграждение', callback_data='additionalRemuneration')
+howMuchCanEarnKeyboard.add(additionalRemunerationButton)
+
+formsOfParthershipKeyboard=InlineKeyboardMarkup(row_width=1)
+otherPatnershipOptionButton=InlineKeyboardButton(text='Другие варианты партнерства', callback_data='otherPatnershipOption')
+naturalPersonButton=InlineKeyboardButton(text='Физлицо', callback_data='naturalPerson')
+selfEmployedButton=InlineKeyboardButton(text='Самозанятый', callback_data='selfEmployed')
+urFaceButton=InlineKeyboardButton(text='Юрлицо/ИП', callback_data='urFace')
+retireeButton=InlineKeyboardButton(text='Пенсионеры', callback_data='retiree')
+formsOfParthershipKeyboard.add(naturalPersonButton, selfEmployedButton, urFaceButton, otherPatnershipOptionButton)
+naturalPersonKeyboard=InlineKeyboardMarkup(row_width=1).add(retireeButton)
+
+toolsAndPromotionKeyboard=InlineKeyboardMarkup(row_width=1)
+websiteBannersButton=InlineKeyboardButton(text='Баннеры для сайта', callback_data='websiteBanners')
+socialMediaBannersButton=InlineKeyboardButton(text='Баннеры для соцсетей', callback_data='socialMediaBanners')
+widgetsButton=InlineKeyboardButton(text='Виджеты', callback_data='widgets')
+QRCodeButton=InlineKeyboardButton(text='QR-код', callback_data='QRCode')
+toolsAndPromotionKeyboard.add(websiteBannersButton, socialMediaBannersButton, widgetsButton, QRCodeButton)
+
+officialRepresentativesKeyboard=InlineKeyboardMarkup(row_width=1).add(toolsAndPromotionButton, applicationElbaButton, afterSubmitApplicationButton, statusApplicationButton)
+
+
 
 @dp.message_handler(commands='start')
 async def firstButton(message: types.Message):
@@ -135,7 +171,7 @@ async def mainPage(callmP: types.CallbackQuery):
                                          'Новости\n'
                                          'С центрального баннера, расположенного на главной странице кабинета, можно перейти к новостям реферальной программы и Контура в целом.\n'
                                          'Инструменты продвижения продуктов\n'
-                                         'Инструменты продвижения продуктов находятся на главной странице кабинета партнера. Ими можно пользоваться сразу после регистрации.\n', parse_mode='Markdown', disable_web_page_preview=True)
+                                         'Инструменты продвижения продуктов находятся на главной странице кабинета партнера. Ими можно пользоваться сразу после регистрации.\n', parse_mode='Markdown', disable_web_page_preview=True, reply_markup=toolsAndPromotionKeyboard)
 
 @dp.callback_query_handler(text='linksAccount')
 async def linksAccount(calllAccou: types.CallbackQuery):
@@ -198,7 +234,7 @@ async def rewardButton(callRew: types.CallbackQuery):
                                           '🔸КЭП для юрлиц или ИП\n'
                                           'Партнеры-юрлица или ИП, у которых нет электронной подписи, должны выпустить ее самостоятельно.\n'
                                           '🔸КЭП для физлиц\n'
-                                          'Партнеры-физлица, у которых нет электронной подписи, могут получить ее бесплатно.',parse_mode='Markdown', disable_web_page_preview=True,reply_markup = rewardKeyboard)
+                                          'Партнеры-физлица, у которых нет электронной подписи, могут получить ее бесплатно.',parse_mode='Markdown', disable_web_page_preview=True, reply_markup = rewardKeyboard)
 
 @dp.callback_query_handler(text='termsAccrual')
 async def termsAccrual(callAccural: types.CallbackQuery):
@@ -306,8 +342,107 @@ async def recommendations(callRec: types.CallbackQuery):
         await callRec.message.answer(text='Выберите продукт, который хотите рекомендовать или аудиторию, которой хотите рекомендовать.',reply_markup = recommendationsKeyboard)
 
 
+#Блок еще
+@dp.callback_query_handler(text='more')
+async def more(callm: types.CallbackQuery):
+        await callm.message.answer(text='Другие вопросы', reply_markup=moreKeyboard )
+
+@dp.callback_query_handler(text='officialRepresentatives')
+async def officialRepresentatives(calloR: types.CallbackQuery):
+        await calloR.message.answer(text='Если вы уже сотрудничаете с Контуром как официальный представитель, то вы тоже можете использовать кабинет партнёра для отправки заявок за клиента.\n'
+                                         '🔸Если у вас открыт прайс на продукт и у клиента нет брони, то он попадёт к вам на обслуживание, и вы выступите как L-агент и S-агент. \n'
+                                         '🔸Если у вас не открыт прайс на продукт или клиент уже забронирован, то он уйдёт по распределению в другой отдел продаж, а вы получите вознаграждение как L-агент.', reply_markup=officialRepresentativesKeyboard)
+
+@dp.callback_query_handler(text='termsRefPatherships')
+async def termsRefPatherships(calltRP: types.CallbackQuery):
+        await calltRP.message.answer(text='Реферальная программа — это упрощенная форма сотрудничества по [договору-оферте](https://kontur.ru/partnership/online/oferta). При регистрации каждому партнеру присваивается уникальный партнерский код. Его можно увидеть в [кабинете партнера](https://kontur.ru/account/partnership) в блоке «Анкета». Все инструменты кабинета содержат такой код. Он позволяет системе фиксировать клиента за вами.\n'
+                                          'Партнеры рекомендуют сервисы Контура с помощью реферальных ссылок и других инструментов кабинета партнера. Продажу сервисов осуществляет Контур, а партнеру начисляется вознаграждение за привлеченных новых клиентов. Вознаграждение приходит в виде отчета в кабинет партнера на следующий месяц после оплаты клиентом сервиса.',parse_mode='Markdown', disable_web_page_preview=True, reply_markup=termsRefPathershipsKeyboard)
+
+@dp.callback_query_handler(text='whoCanParticipate')
+async def whoCanParticipate(callwCP: types.CallbackQuery):
+        await callwCP.message.answer(text='Кто может участвовать\n'
+                                          '🔸Бухгалтеры, вебмастера, физические и юридические лица, которым интересно данное предложение.\n'
+                                          '🔸SMM-специалисты, занимающиеся продвижением услуг в социальных сетях.\n'
+                                          '🔸Владельцы специализированных порталов и блогов (бухгалтерия, бизнес).\n'
+                                          '🔸Любые лояльные пользователи, которые готовы рекомендовать продукты СКБ Контур для решения бизнес-задач своим коллегам, друзьям и знакомым.\n'
+                                          'Кто не может участвовать\n'
+                                          '🔸Физические лица, состоящие с СКБ Контур в трудовых отношениях.\n'
+                                          '🔸Юридические лица, оказывающие СКБ Контур услуги по аналогичным договорам.\n'
+                                          '🔸Иные аффилированные с СКБ Контур физические и юридические лица.')
+
+@dp.callback_query_handler(text='howMuchCanEarn')
+async def howMuchCanEarn(callhMCE: types.CallbackQuery):
+        await callhMCE.message.answer(text='Вознаграждение — фиксированный процент от оплаты новых пользователей, которые отправили заявку/зарегистрировались в сервисе СКБ Контур с партнерским кодом или перешли по реферальной ссылке партнера. Размер вознаграждения зависит от выбранного сервиса — от 5 до 50%. В среднем наши партнеры зарабатывают 20 000 рублей в месяц. Посмотрите [таблицу](https://kontur.ru/partnership/online/rules#7) вознаграждения по продуктам.', parse_mode='Markdown', disable_web_page_preview=True, reply_markup=howMuchCanEarnKeyboard)
+
+@dp.callback_query_handler(text='additionalRemuneration')
+async def additionalRemuneration(callaRem: types.CallbackQuery):
+        await callaRem.message.answer(text='Если вы приведете в программу другого реферального партнера, то мы будем начислять вам дополнительные 2% от оплаченных счетов его клиентов. Для этого воспользуйтесь инструментом «Приводите новых партнеров» на главной странице кабинета.')
+
+@dp.callback_query_handler(text='formsOfParthership')
+async def formsOfParthership(callfOP: types.CallbackQuery):
+        await callfOP.message.answer(text='Формы партнерства:', reply_markup=formsOfParthershipKeyboard)
+
+@dp.callback_query_handler(text='otherPatnershipOption')
+async def otherPatnershipOption(calloPO: types.CallbackQuery):
+        await calloPO.message.answer(text='Официальный представитель\n'
+                                          'Форма сотрудничества для юридических лиц и ИП, по которой после прохождения обучения и заключения договора партнер становится официальным представителем – Сервисным центром. Это подразумевает полное взаимодействие с клиентом на всех этапах: консультирование, работа с продажами и продлениями.\n'
+                                          'Если вас интересует данный тип сотрудничества, то оставьте заявку на странице и обсудите варианты сотрудничества.\n'
+                                          'Международное партнерство\n'
+                                          'Почта для зарубежных партнеров world@skbkontur.ru.')
+
+@dp.callback_query_handler(text='naturalPerson')
+async def naturalPerson(callnP: types.CallbackQuery):
+        await callnP.message.answer(text='Из вознаграждения удерживается НДФЛ — 13 %. \n'
+                                         'Бесплатная КЭП для получения вознаграждения.', reply_markup=naturalPersonKeyboard)
+
+@dp.callback_query_handler(text='selfEmployed')
+async def selfEmployed(callsE: types.CallbackQuery):
+        await callsE.message.answer(text='Юридически самозанятое население из-за спецрежима не имеет права работать по агентской схеме и по агентскому договору, который является основным в реферальной программе. Самозанятый может работать в программе как физлицо, но из суммы вознаграждения будет вычитываться и уплачиваться в ФНС 13% НДФЛ.')
+
+@dp.callback_query_handler(text='urFace')
+async def urFace(calluF: types.CallbackQuery):
+        await calluF.message.answer(text='Нет вычета НДФЛ 13 %.\n'
+                                         'Необходимо приобрести электронную подпись на юрлицо, если ее нет.\n'
+                                         'Для перечисления вознаграждения у партнера должен быть открыт счет в банке.')
+
+@dp.callback_query_handler(text='retiree')
+async def retiree(callretiree: types.CallbackQuery):
+        await callretiree.message.answer(text='Пенсионерам не запрещено участвовать в программе, но есть свои нюансы. В момент вывода вознаграждения на счет мы подаем данные в ПФР о полученном вами доходе.\n'
+                                              'Потенциальному партнеру, который является пенсионером, необходимо уточнить в своем отделении ПФР, повлияет ли доход по агентскому договору на пенсионные отчисления. При необходимости можно зарегистрировать кабинет на другого человека.')
+
+@dp.callback_query_handler(text='toolsAndPromotion')
+async def toolsAndPromotion(calltAP: types.CallbackQuery):
+        await calltAP.message.answer(text='Чтобы рекомендовать сервисы Контура, используйте [инструменты продвижения](https://kontur.ru/partnership/tools) из кабинета партнера. Инструменты бесплатны, пользоваться ими можно сразу после регистрации в реферальной программе.', parse_mode='Markdown', disable_web_page_preview=True, reply_markup=toolsAndPromotionKeyboard)
+
+@dp.callback_query_handler(text='websiteBanners')
+async def websiteBanners(callwB: types.CallbackQuery):
+        await callwB.message.answer(text='Если у вас есть свой интернет-ресурс — сайт или блог, то разместите на нем рекламные баннеры продуктов Контура. Все баннеры разработаны нашими дизайнерами и отлично смотрятся на любых сайтах. Это удобный инструмент онлайн-продвижения.\n'
+                                         'Как разместить баннер:\n'
+                                         '1. Нажмите «Подготовить баннер».\n'
+                                         '2. Выберите продукт в списке, нажав на его название.\n'
+                                         '3. Выберите нужный размер. Выберите страницу для ссылки и проставьте метку SUBID, если нужно.\n'
+                                         '4. Нажмите «Скопировать код». Полученный код теперь можно вставить на сайт[.](https://support.kontur.ru/download/attachments/16221763/014.png)',parse_mode='Markdown')
+
+@dp.callback_query_handler(text='widgets')
+async def widgets(callwidgets: types.CallbackQuery):
+        await callwidgets.message.answer(text='С помощью виджетов клиенты смогут оставлять заявки на продукты Контура, не уходя с вашего сайта. При этом заявки будут уходить с вашим кодом партнера.\n'
+                                              'Все виджеты можно найти в разделе [Инструменты](https://kontur.ru/partnership/tools) и на главной странице кабинета партнера.\n'
+                                              'Доступны несколько типов виджетов:\n'
+                                              '🔸Виджет формы заявки. Чтобы получить виджет — заполните форму: укажите ваш код партнера, продукт. Получите HTML-код, скопируйте его и интегрируйте на свой сайт сами или с помощью разработчика вашего сайта.\n'
+                                              '🔸Виджет продуктовой строки поиска. Данный тип виджета демонстрирует возможность поиска в сервисе. Доступны виджеты по продуктам: Диадок, Фокус, Светофор, Норматив, Закупки.\n'
+                                              '🔸Виджет подбора сертификата подписи.\n'
+                                              '🔸Виджет калькулятора и виджет цен. Встройте на сайт калькулятор отпускных, больничных, декретных от Контур.Бухгалтерии, чтобы продемонстрировать возможности сервиса и заинтересовать им[.](https://www.mindomo.com/ru/mindmap/mind-map-4f85d62500074a8bb7c2baabfddc6cb9#:~:text=https%3A//support.kontur.ru/download/attachments/16221763/019.png)', parse_mode='Markdown')
 
 
+@dp.callback_query_handler(text='QRCode')
+async def QRCode(callQRCode: types.CallbackQuery):
+        await callQRCode.message.answer(text='QR-код — это двухмерный штрихкод, который содержит зашифрованную информацию: ссылку на сайт или соцсеть, текст или статью. Ваши офлайн-клиенты, наведя камеру мобильного на QR-код, размещенный на визитке или листовке, смогут перейти на сайт или другой онлайн-ресурс\n'
+                                             'Чтобы сгенерировать QR-код со своей реферальной ссылкой:\n'
+                                             '1. Нажмите «Получить QR-код» в инструментах продвижения кабинета партнера.\n'
+                                             '2. Откроется генератор QR-кодов. В поле «URL-адрес» введите реферальную ссылку со своим партнерским кодом. Как создать такую ссылку, читайте выше в разделе «Реферальные ссылки».\n'
+                                             '3. Произведите настройки внешнего вида и нажмите «Создать QR-код». В правой части страницы сгенерируется QR-код.\n'
+                                             '4. Выберите формат, в котором будете его сохранять: PNG или SVG. Нажмите «Скачать».\n'
+                                             '5. Дождитесь, пока картинка скачается на ваше устройство.\n')
 
 @dp.callback_query_handler(text='helpButton')
 async def helpMessage(helpMessage : types.Message):
