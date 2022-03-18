@@ -5,7 +5,7 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 import os
 import config
-<<<<<<< HEAD
+
 from aiogram.utils.markdown import hlink
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -14,14 +14,12 @@ bot = Bot(token='5068063653:AAEby3FBqFSZkvUysXrRi8f7w4RyNRXfiS0')
 dp = Dispatcher(bot)
 
 
-=======
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 bot = Bot(token='5068063653:AAGNUJg75XuCcQwMm7Tl-7LFBCEOa2WOw58')
 dp = Dispatcher(bot)
 
->>>>>>> github_/master
 #Главное меню
 firstMenuKeyboard=InlineKeyboardMarkup(row_width=1)
 accountProblemButton=InlineKeyboardButton(text='Вход в кабинет партнера', callback_data='accountProblemButton')
@@ -33,15 +31,15 @@ helpButton=InlineKeyboardButton(text='Помощь человека', callback_d
 firstMenuKeyboard.add(accountProblemButton, rewardButton, submitApplication, recommendations, more, helpButton)
 
 #Кнопки: "Вход в кабинет партнера"
-<<<<<<< HEAD
+
 loginAccountPartnersKeyboard= InlineKeyboardMarkup (row_width=1)
 frequentProblemButton= InlineKeyboardButton(text='Частые проблемы', callback_data='frequentProblem')
 accountPartnersButton= InlineKeyboardButton(text='Кабинет партнера', callback_data='accountPartners')
 loginAccountPartnersKeyboard.add(frequentProblemButton, accountPartnersButton)
 
 
-=======
->>>>>>> github_/master
+
+
 accountProblemKeyboard = InlineKeyboardMarkup(row_width=1)
 accountPartnersProblemButton = InlineKeyboardButton(text='Чужие данные', callback_data='otherData')
 otherDataButton = InlineKeyboardButton(text='Другой код', callback_data='otherCode')
@@ -49,7 +47,7 @@ lostAccessButton = InlineKeyboardButton(text='Пропал доступ', callba
 helpButton=InlineKeyboardButton(text='Помощь человека', callback_data='helpButton')
 accountProblemKeyboard.add(accountPartnersProblemButton, otherDataButton, lostAccessButton, helpButton)
 
-<<<<<<< HEAD
+
 accountPartnersKeyboard=InlineKeyboardMarkup(row_width=1)
 mainPageButton = InlineKeyboardButton(text='Главная страница', callback_data='mainPage')
 linksAccountButton = InlineKeyboardButton(text='Ссылки', callback_data='linksAccount')
@@ -135,15 +133,14 @@ toolsAndPromotionKeyboard.add(websiteBannersButton, socialMediaBannersButton, wi
 officialRepresentativesKeyboard=InlineKeyboardMarkup(row_width=1).add(toolsAndPromotionButton, applicationElbaButton, afterSubmitApplicationButton, statusApplicationButton)
 
 
-=======
->>>>>>> github_/master
+
 
 @dp.message_handler(commands='start')
 async def firstButton(message: types.Message):
     await message.answer('Какие у вас вопросы? \n'
                          'Выберите интересующий раздел нажав на кнопку, или выберите “Помощь человека” для связи с сотрудником реферальной программы.', reply_markup=firstMenuKeyboard)
 
-<<<<<<< HEAD
+
 #Блок проблем кабинета партнера--
 
 @dp.callback_query_handler(text='accountProblemButton')
@@ -154,13 +151,13 @@ async def callAccountProblemKeyboard(callAcc: types.CallbackQuery):
 @dp.callback_query_handler(text='frequentProblem')
 async def frequentProblem(callfP: types.CallbackQuery):
     await callfP.message.answer(text='Список частых проблем со входом в кабинет партнёра и как их решить.',reply_markup = accountProblemKeyboard)
-=======
+
 @dp.callback_query_handler(text='accountProblemButton')
 async def callAccountProblemKeyboard(callAcc: types.CallbackQuery):
     await callAcc.message.answer('Зайдите на сайт kontur.ru в раздел Реферальная программа - https://kontur.ru/partnership/online и нажмите «Войти в кабинет партнера».\n'
                               'Заходить в кабинет партнера необходимо по электронной почте, указанной при регистрации в реферальной программе.')
     await callAcc.message.answer(text='Список частых проблем со входом в кабинет партнёра и как их решить.',reply_markup = accountProblemKeyboard)
->>>>>>> github_/master
+
 
 @dp.callback_query_handler(text='otherData')
 async def callOtherData(callOD: types.CallbackQuery):
@@ -181,7 +178,7 @@ async def lostAccess(callLA: types.CallbackQuery):
                                        '2) Если вы точно знаете, что заходите по нужной почте и пропал доступ в кабинет партнёра, то значит произошло объединение аккаунтов.\n'
                                        'Напишите на почту part@skbkontur.ru с вашей почты, которая была подключена к реферальному коду и мы поможем восстановить доступ.\n')
 
-<<<<<<< HEAD
+
 @dp.callback_query_handler(text='accountPartners')
 async def lostAccess(callaP: types.CallbackQuery):
         await callaP.message.answer(text='Выберите раздел кабинет партнёра', reply_markup=accountPartnersKeyboard)
@@ -468,8 +465,7 @@ async def QRCode(callQRCode: types.CallbackQuery):
                                              '4. Выберите формат, в котором будете его сохранять: PNG или SVG. Нажмите «Скачать».\n'
                                              '5. Дождитесь, пока картинка скачается на ваше устройство.\n')
 
-=======
->>>>>>> github_/master
+
 @dp.callback_query_handler(text='helpButton')
 async def helpMessage(helpMessage : types.Message):
     await helpMessage.answer('Оператор скоро вам ответит')
