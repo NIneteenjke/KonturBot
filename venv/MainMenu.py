@@ -4,7 +4,7 @@ from aiogram import Bot, types
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils import executor
 import os
-import config
+#import config
 import logging
 
 from aiogram.utils.markdown import hlink
