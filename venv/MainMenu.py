@@ -25,7 +25,7 @@ submitApplication=InlineKeyboardButton(text='Отправить заявку', c
 recommendations=InlineKeyboardButton(text='Какие продукты рекомендовать', callback_data='recommendations')
 more=InlineKeyboardButton(text='Еще...', callback_data='more')
 helpButton=InlineKeyboardButton(text='Помощь человека', callback_data='helpButton')
-firstMenuKeyboard.add(accountProblemButton, rewardButton, submitApplication, recommendations, more, helpButton)
+firstMenuKeyboard.add(accountProblemButton, rewardButton, submitApplication, recommendations, more)#, helpButton)
 
 #Кнопки: "Вход в кабинет партнера"
 
@@ -40,7 +40,7 @@ accountPartnersProblemButton = InlineKeyboardButton(text='Чужие данны�
 otherDataButton = InlineKeyboardButton(text='Другой код', callback_data='otherCode')
 lostAccessButton = InlineKeyboardButton(text='Пропал доступ', callback_data='lostAccess')
 helpButton=InlineKeyboardButton(text='Помощь человека', callback_data='helpButton')
-accountProblemKeyboard.add(accountPartnersProblemButton, otherDataButton, lostAccessButton, helpButton)
+accountProblemKeyboard.add(accountPartnersProblemButton, otherDataButton, lostAccessButton)#, helpButton)
 
 
 accountPartnersKeyboard=InlineKeyboardMarkup(row_width=1)
@@ -129,7 +129,7 @@ officialRepresentativesKeyboard=InlineKeyboardMarkup(row_width=1).add(toolsAndPr
 
 backToMainMenuKeyboard=InlineKeyboardMarkup(row_width=1)
 backToMainMenuButton=InlineKeyboardButton(text="Вернуться в главное меню", callback_data='backToMainMenu')
-backToMainMenuKeyboard.add(backToMainMenuButton, helpButton)
+backToMainMenuKeyboard.add(backToMainMenuButton)#, helpButton)
 
 @dp.message_handler(commands='start')
 async def firstButton(message: types.Message):
