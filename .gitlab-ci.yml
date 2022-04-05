@@ -2,25 +2,28 @@ include:
     project: k8s/ci-templates
     file: kubernetes/common.yml
 
-
-extends:
-  - .runner_tags
-  - .default_variables
-  - .dockerauth
-  - .onlymaster
-
-
-script:
-  - docker build -t konturtelegrambot .
-  - docker push konturtelegrambot
-  - >
+build:
+  image: docker:telegrambotkontur
+  extends:
+    - .runner_tags
+    - .default_variables
+    - .dockerauth
+    - .onlymaster
+  stage: build
+  script:
+    - docker build -t telegrambotkontur .
+    - docker push telegrambotkontur
     helm repo update &&
     helm upgrade -i KonturBotURR
     --version= 3.3.3
-    --set application.image=konturtelegrambot
+    --set application.image=telegrambotkontur
     --kubeconfig=urr-sis
-    --namespace=$K8S_NAMESPACE
-    --set application.configs.MY_VAR=$MY_VAR
+    --namespace=urr-sis-sa
     --atomic
 
-image: docker:latest
+deploy_prod:
+  extends:
+    - .runner_tags
+    - .default_variables
+    - .helm_image
+    - .onlymaster
