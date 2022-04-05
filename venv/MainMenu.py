@@ -7,24 +7,27 @@ import os
 #import config
 import logging
 
+
+
 from aiogram.utils.markdown import hlink
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 bot = Bot(token='5068063653:AAEby3FBqFSZkvUysXrRi8f7w4RyNRXfiS0')
 dp = Dispatcher(bot)
-logging.basicConfig(level='DEBUG', filename='metrics.log')
+log_format='%(asctime)s - %(filename)s: - %(message)s - %(name)s'
+logging.basicConfig(level='DEBUG', filename='metrics.log',format=log_format, datefmt='%Y-%m-%d %H:%M:%S')
 
-logger=logging.getLogger()
+logger = logging.getLogger()
 
 #Главное меню
-firstMenuKeyboard=InlineKeyboardMarkup(row_width=1)
-accountProblemButton=InlineKeyboardButton(text='Вход в кабинет партнера', callback_data='accountProblemButton')
-rewardButton=InlineKeyboardButton(text='Получение вознаграждения', callback_data='rewardButton')
-submitApplication=InlineKeyboardButton(text='Отправить заявку', callback_data='submitApplication')
-recommendations=InlineKeyboardButton(text='Какие продукты рекомендовать', callback_data='recommendations')
-more=InlineKeyboardButton(text='Еще...', callback_data='more')
-helpButton=InlineKeyboardButton(text='Помощь человека', callback_data='helpButton')
+firstMenuKeyboard = InlineKeyboardMarkup(row_width=1)
+accountProblemButton = InlineKeyboardButton(text='Вход в кабинет партнера', callback_data='accountProblemButton')
+rewardButton = InlineKeyboardButton(text='Получение вознаграждения', callback_data='rewardButton')
+submitApplication = InlineKeyboardButton(text='Отправить заявку', callback_data='submitApplication')
+recommendations = InlineKeyboardButton(text='Какие продукты рекомендовать', callback_data='recommendations')
+more = InlineKeyboardButton(text='Еще...', callback_data='more')
+helpButton = InlineKeyboardButton(text='Помощь человека', callback_data='helpButton')
 firstMenuKeyboard.add(accountProblemButton, rewardButton, submitApplication, recommendations, more)#, helpButton)
 
 #Кнопки: "Вход в кабинет партнера"
@@ -39,37 +42,37 @@ accountProblemKeyboard = InlineKeyboardMarkup(row_width=1)
 accountPartnersProblemButton = InlineKeyboardButton(text='Чужие данные', callback_data='otherData')
 otherDataButton = InlineKeyboardButton(text='Другой код', callback_data='otherCode')
 lostAccessButton = InlineKeyboardButton(text='Пропал доступ', callback_data='lostAccess')
-helpButton=InlineKeyboardButton(text='Помощь человека', callback_data='helpButton')
+helpButton = InlineKeyboardButton(text='Помощь человека', callback_data='helpButton')
 accountProblemKeyboard.add(accountPartnersProblemButton, otherDataButton, lostAccessButton)#, helpButton)
 
 
-accountPartnersKeyboard=InlineKeyboardMarkup(row_width=1)
+accountPartnersKeyboard = InlineKeyboardMarkup(row_width=1)
 mainPageButton = InlineKeyboardButton(text='Главная страница', callback_data='mainPage')
 linksAccountButton = InlineKeyboardButton(text='Ссылки', callback_data='linksAccount')
 applicationAccountButton = InlineKeyboardButton(text='Заявки', callback_data='applicationAccount')
 accountPartnersKeyboard.add(mainPageButton, linksAccountButton, applicationAccountButton)
 
-linksAccountKeyboard=InlineKeyboardMarkup(row_width=1)
-readyLinksButton=InlineKeyboardButton(text='Готовые ссылки', callback_data='readyLinks')
-createLinksButton=InlineKeyboardButton(text='Создать ссылку', callback_data='createLinks')
-statisticsButton=InlineKeyboardButton(text='Статистика', callback_data='statistics')
+linksAccountKeyboard = InlineKeyboardMarkup(row_width=1)
+readyLinksButton = InlineKeyboardButton(text='Готовые ссылки', callback_data='readyLinks')
+createLinksButton = InlineKeyboardButton(text='Создать ссылку', callback_data='createLinks')
+statisticsButton = InlineKeyboardButton(text='Статистика', callback_data='statistics')
 linksAccountKeyboard.add(readyLinksButton, createLinksButton, statisticsButton)
 
-applicationAccountKeyboard=InlineKeyboardMarkup(row_width=1)
-sandingApplicationButton= InlineKeyboardButton(text='Отправка заявки', callback_data='sandingApplication')
-statusApplicationButton= InlineKeyboardButton(text='Статусы заявок', callback_data='statusApplication')
-listApplicationExcelButton= InlineKeyboardButton(text='Выгрузка списка заявок в Excel', callback_data='listApplicationExcel')
+applicationAccountKeyboard = InlineKeyboardMarkup(row_width=1)
+sandingApplicationButton = InlineKeyboardButton(text='Отправка заявки', callback_data='sandingApplication')
+statusApplicationButton = InlineKeyboardButton(text='Статусы заявок', callback_data='statusApplication')
+listApplicationExcelButton = InlineKeyboardButton(text='Выгрузка списка заявок в Excel', callback_data='listApplicationExcel')
 applicationAccountKeyboard.add(sandingApplicationButton, statusApplicationButton, listApplicationExcelButton)
 
 #Кнопки: "Отправить заявку"
-submitApplicationKeyboard=InlineKeyboardMarkup(row_width=1)
-applicationElbaButton=InlineKeyboardButton(text='Заявка на Эльбу', callback_data='applicationElba')
-afterSubmitApplicationButton=InlineKeyboardButton(text='После отправки заявки', callback_data='afterSubmitApplication')
-statusApplicationButton=InlineKeyboardButton(text='Статусы заявок', callback_data='statusApplication')
-statusNotSubjectButton=InlineKeyboardButton(text='Статус: "Не подлежит вознаграждению"', callback_data='statusNotSubject')
+submitApplicationKeyboard = InlineKeyboardMarkup(row_width=1)
+applicationElbaButton = InlineKeyboardButton(text='Заявка на Эльбу', callback_data='applicationElba')
+afterSubmitApplicationButton = InlineKeyboardButton(text='После отправки заявки', callback_data='afterSubmitApplication')
+statusApplicationButton = InlineKeyboardButton(text='Статусы заявок', callback_data='statusApplication')
+statusNotSubjectButton = InlineKeyboardButton(text='Статус: "Не подлежит вознаграждению"', callback_data='statusNotSubject')
 submitApplicationKeyboard.add(applicationElbaButton, afterSubmitApplicationButton, statusApplicationButton, statusNotSubjectButton)
-statusApplicationKeyboard=InlineKeyboardMarkup(row_width=1).add(statusApplicationButton, statusNotSubjectButton)
-statusNotSubjectKyeboard=InlineKeyboardMarkup(row_width=1).add(statusNotSubjectButton)
+statusApplicationKeyboard = InlineKeyboardMarkup(row_width=1).add(statusApplicationButton, statusNotSubjectButton)
+statusNotSubjectKyeboard = InlineKeyboardMarkup(row_width=1).add(statusNotSubjectButton)
 
 #Кнопки: "Получение вознаграждения"
 rewardKeyboard = InlineKeyboardMarkup(row_width=1)
