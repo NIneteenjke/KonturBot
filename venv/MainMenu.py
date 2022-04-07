@@ -99,11 +99,11 @@ recommendationsKeyboard.add(chooseProductButton, chooseAudienceButton)
 moreKeyboard=InlineKeyboardMarkup(row_width=1)
 officialRepresentativesButton=InlineKeyboardButton(text='Официальным представителям', callback_data='officialRepresentatives')
 termsRefPathershipsButton=InlineKeyboardButton(text='Условия реферального партнерства', callback_data='termsRefPatherships')
-toolsAndPromotionButton=InlineKeyboardButton(text='Инструменты и продвижения', callback_data='toolsAndPromotion')
+toolsAndPromotionButton=InlineKeyboardButton(text='Инструменты и продвижение', callback_data='toolsAndPromotion')
 moreKeyboard.add(officialRepresentativesButton, notTakeApplicatonButton, accountPartnersButton, termsRefPathershipsButton, toolsAndPromotionButton )
 
 termsRefPathershipsKeyboard=InlineKeyboardMarkup(row_width=1)
-whoCanParticipateButton=InlineKeyboardButton(text='Кто может учавствовать', callback_data='whoCanParticipate')
+whoCanParticipateButton=InlineKeyboardButton(text='Кто может участвовать', callback_data='whoCanParticipate')
 formsOfParthershipButton=InlineKeyboardButton(text='Формы партнерства', callback_data='formsOfParthership')
 howMuchCanEarnButton=InlineKeyboardButton(text='Сколько можно заработать', callback_data='howMuchCanEarn')
 termsRefPathershipsKeyboard.add(whoCanParticipateButton, formsOfParthershipButton, howMuchCanEarnButton)
@@ -183,13 +183,16 @@ async def accountPartners(callaP: types.CallbackQuery):
 
 @dp.callback_query_handler(text='mainPage')
 async def mainPage(callmP: types.CallbackQuery):
-        await callmP.message.answer(text='Анкета\n'
+        await callmP.message.answer(text='*Анкета*\n'
                                          'На [главной странице](https://kontur.ru/account/partnership) кабинета партнера в блоке Анкета можно увидеть следующие данные: ФИО, электронная почта, телефон, код партнера. ФИО и почту при необходимости вы можете изменить самостоятельно в [личном кабинете](https://cabinet.kontur.ru/).\n'
-                                         'Код партнера\n'
+                                         '\n'
+                                         '*Код партнера*\n'
                                          'Уникальный партнерский код присваивается сразу после регистрации в программе. Он помогает фиксировать клиента за вами. Код вшит во все инструменты кабинета партнера.\n'
-                                         'Новости\n'
+                                         '\n'
+                                         '*Новости*\n'
                                          'С центрального баннера, расположенного на главной странице кабинета, можно перейти к новостям реферальной программы и Контура в целом.\n'
-                                         'Инструменты продвижения продуктов\n'
+                                         '\n'
+                                         '*Инструменты продвижения продуктов*\n'
                                          'Инструменты продвижения продуктов находятся на главной странице кабинета партнера. Ими можно пользоваться сразу после регистрации.\n', parse_mode='Markdown', disable_web_page_preview=True, reply_markup=toolsAndPromotionKeyboard)
         logger.debug('Пользователь нажал кнопку "Главная страница"')
 
@@ -276,7 +279,7 @@ async def whenComes(callwC: types.CallbackQuery):
                                          'Если оплата по заявке была в декабре, то вознаграждение придёт 15 января, если оплата была в январе, то 15 февраля.',parse_mode='Markdown', disable_web_page_preview=True, reply_markup=backToMainMenuKeyboard)
         logger.debug('Пользователь нажал кнопку "Когда приходит"')
 
-@dp.callback_query_handler(text='notAcceptReport')
+@dp.callback_query_handler(text='notTakeApplication')
 async def notTakeApplicaton(callnTA: types.CallbackQuery):
         await callnTA.message.answer(text='Если вы не нашли заявку в итоговом отчете, сначала необходимо проверить, что:\n'
                                           '🔸Счет был полностью оплачен.\n'
@@ -302,7 +305,7 @@ async def freeKAP(callfKAP: types.CallbackQuery):
                                            '🔸Адрес электронной почты\n'
                                            '🔸ИНН\n'
                                            '🔸Код партнёра.\n'
-                                           'После получения подписи вы сможете отправить отчёт в Диадок для получения вознаграждения.',reply_markup=sendReportOnDiadokKeyboard)
+                                           'После получения подписи вы сможете отправить отчёт в Диадок для получения вознаграждения.',reply_markup=backToMainMenuKeyboard)
         logger.debug('Пользователь нажал кнопку "Бесплатная КЭП для физлиц"')
 
 @dp.callback_query_handler(text='notAcceptReport')
@@ -374,6 +377,12 @@ async def statusNotSubjectButton(callsNSB: types.CallbackQuery):
                                            '🔸Счет выставлен на дополнительную услугу, например за организацию рабочего места или дополнительный сертификат в рамках какого-либо продукта. Доп.услуги в рамках реферальной программы не вознаграждаются.\n'
                                            '🔸Счет еще не оплачен. Смена статуса произойдет после поступления оплаты на расчетный счет Контура.',parse_mode='Markdown', disable_web_page_preview=True, reply_markup=backToMainMenuKeyboard)
         logger.debug('Пользователь нажал кнопку "Статус: Не подлежит вознаграждению"')
+
+@dp.callback_query_handler(text='applicationElba')
+async def applicationElba(callAE: types.CallbackQuery):
+        await callAE.message.answer(text='По продукту Эльба нельзя отправить заявку, потому что у Эльбы регистрация и нет формы заявки. Зарегистрироваться можно только на сайте Эльбы.\n'
+                                         '\n'
+                                         'Чтобы порекомендовать клиентам Эльбу, отправьте клиенту реферальную ссылку из кабинета партнёра: https://kontur.ru/account/partnership/links', reply_markup=backToMainMenuKeyboard)
 
 #Блок рекомендаций продукта
 @dp.callback_query_handler(text='recommendations')
@@ -453,7 +462,7 @@ async def selfEmployed(callsE: types.CallbackQuery):
 async def urFace(calluF: types.CallbackQuery):
         await calluF.message.answer(text='Нет вычета НДФЛ 13 %.\n'
                                          'Необходимо приобрести электронную подпись на юрлицо, если ее нет.\n'
-                                         'Для перечисления вознаграждения у партнера должен быть открыт счет в банке.')
+                                         'Для перечисления вознаграждения у партнера должен быть открыт счет в банке.', reply_markup=backToMainMenuKeyboard)
         logger.debug('Пользователь нажал кнопку "Юрлицо\ИП"')
 
 @dp.callback_query_handler(text='retiree')
@@ -477,7 +486,7 @@ async def websiteBanners(callwB: types.CallbackQuery):
                                          '4. Нажмите «Скопировать код». Полученный код теперь можно вставить на сайт[.](https://support.kontur.ru/download/attachments/16221763/014.png)',parse_mode='Markdown', reply_markup=backToMainMenuKeyboard)
         logger.debug('Пользователь нажал кнопку "Банеры для сайта"')
 
-@dp.callback_query_handler(text='widgets')
+@dp.callback_query_handler(text='socialMediaBanners')
 async def widgets(callwidgets: types.CallbackQuery):
         await callwidgets.message.answer(text='У нас есть готовые баннеры для соцсетей, с помощью которых партнеры могут продвигаться и в этом онлайн-канале. Чтобы разместить баннер в социальной сети:\n'
                                               '1. Нажмите «Разместить пост» в блоке «Публикация баннера в социальных сетях».\n'
