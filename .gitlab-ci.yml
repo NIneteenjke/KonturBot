@@ -3,7 +3,7 @@ include:
     file: kubernetes/common.yml
 
 build:
-  image: docker:telegrambotkontur
+  image: docker:referralhelp_bot
   extends:
     - .runner_tags
     - .default_variables
