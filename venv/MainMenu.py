@@ -13,7 +13,7 @@ from aiogram.utils.markdown import hlink
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-bot = Bot(token='5151766578:AAGo3PINTeoi5Awu32XjzEW4tgbHSVy5kHc')
+bot = Bot(token='5068063653:AAEby3FBqFSZkvUysXrRi8f7w4RyNRXfiS0')
 dp = Dispatcher(bot)
 log_format='%(asctime)s - %(filename)s: - %(message)s - %(name)s'
 logging.basicConfig(level='DEBUG', filename='metrics.log',format=log_format, datefmt='%Y-%m-%d %H:%M:%S')
